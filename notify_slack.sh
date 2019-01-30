@@ -3,7 +3,7 @@
 # Project : Slack notify
 # Filename: notify_slack.sh
 # Function: Notify Slack Incoming Webhook
-# Author: Jimmy, db045
+# Author: LSW.db045
 # Update: 2019-01-30 , 23:09
 #_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/_/
 #
@@ -37,11 +37,10 @@ slack_opt_text=`whoami`"@"`pwd`
 
 # Check slack webhook
 if [ -z $slack_webhook_url ];then echo "slack_webhook_url not found!";exit 1;fi
+
 # Check argument
-if [ -z $1 ];then echo "message not found";exit 1;fi
+if [ -z "$1" ];then echo "message not found";exit 1;fi
 slack_pretext=$1
-
-
 
 result=`curl -s --header "Content-Type: application/json" \
   --request POST \
@@ -50,6 +49,7 @@ result=`curl -s --header "Content-Type: application/json" \
                     { \
                         "color": "#36a64f", \
                         "title":  "'"$slack_pretext"'", \
+                        "pretext": "'"$exec_result"'", \
                         "text": "'"$slack_opt_text"'", \
                         "footer":  "'"$slack_footer"'", \
                         "footer_icon":  "'"$slack_footer_icon"'", \
